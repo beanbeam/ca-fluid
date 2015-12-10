@@ -6,15 +6,13 @@ uniform sampler2D FLUID_BUFFER;
 float BASE_PRESSURE_CAP = 0.5;
 float MAX_COMPRESS = 0.01;
 
-vec2 pos = gl_FragCoord.xy;
-
 float last_state(float xoff, float yoff) {
-    return texture2D(FLUID_BUFFER, (pos + vec2(xoff, yoff))/RESOLUTION).b;
+    return texture2D(FLUID_BUFFER, (gl_FragCoord.xy + vec2(xoff, yoff))/RESOLUTION).b;
 }
 
 void main() {
     float remaining = last_state(0.0, 0.0);
-
+    vec2 pos = gl_FragCoord.xy;
 
     float oDown = 0.0;
     if (pos.y < RESOLUTION.x - 1.0) {
